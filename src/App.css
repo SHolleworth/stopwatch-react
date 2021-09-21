@@ -22,12 +22,28 @@
   --shadow-color: rgba(0, 0, 0, .2);
 }
 
-
 .App {
   display: flex;
   height: 100vh;
   justify-content: center;
   align-items: center;
+}
+
+h1, p {
+  user-select: none;
+}
+
+h1 {
+  font-family: 'SF Pro Display Ultralight', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 50;
+  font-variant-numeric: tabular-nums;
+}
+
+p {
+  font-family: 'SF Pro Text Thin', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: .75rem;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
 }
 
 .background {
@@ -152,4 +168,35 @@ button {
 
 .laps-box::-webkit-scrollbar-thumb:active {
   background-color: var(--scrollbar-thumb-active-color);
+}
+
+.lap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px 0 10px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-color: var(--lap-border-color);
+  width: '100%';
+  height: 35px;
+}
+
+.lap p {
+  display: inline-block;
+  font-weight: bold;
+  color: var(--normal-lap-color);
+}
+
+.lap--fast-color p {
+  color: var(--fast-lap-color);
+}
+
+.lap--slow-color p {
+  color: var(--slow-lap-color);
+}
+
+.lap--mask-color p {
+  color: var(--normal-lap-color)
 }
