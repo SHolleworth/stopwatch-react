@@ -9,4 +9,4 @@ const MainTimer = ({mainTime}) => {
   )
 }
 
-  export default MainTimer
+export default MainTimer

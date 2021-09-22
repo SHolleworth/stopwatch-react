@@ -1,51 +1,17 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { renderTime } from '../../utility'
 
-const Laps = (props) => {
-  const {
-    started,
-    makingLap, 
-    setMakingLap, 
-    activeLapTime, 
-    deletingLaps, 
-    setDeletingLaps, 
-    setActiveLapTime,
-    fastestLap,
-    slowestLap
-  } = props
-
-  const [lapTimes, setLapTimes] = useState([])
-
-  useEffect(() => {
-    if(makingLap) {
-      updateFastAndSlowLap(activeLapTime)
-      setLapTimes([activeLapTime, ...lapTimes])
-      setActiveLapTime(0)
-      setMakingLap(false)
-    }
-  },[makingLap])
-
-  useEffect(() => {
-    if(deletingLaps) {
-      setLapTimes([])
-      setDeletingLaps(false)
-    }
-  },[deletingLaps])
-
-  const updateFastAndSlowLap = (lapTime) => {
-    slowestLap.current = Math.max(lapTime, slowestLap.current)
-    fastestLap.current = Math.min(lapTime, fastestLap.current)
-  }
+const Laps = ({started, activeLapTime, fastestLap, slowestLap, lapTimes}) => {
 
   const fastLapClass = lapTimes.length > 1 ? "lap--fast-color" : "lap--mask-color"
   const slowLapClass = lapTimes.length > 1 ? "lap--slow-color" : "lap--mask-color"
 
   const addColorClass = (lapTime, index) => {
     if(index < 1) return
-    if(lapTime <= fastestLap.current) {
+    if(lapTime <= fastestLap) {
       return fastLapClass
     }
-    else if(lapTime >= slowestLap.current) {
+    else if(lapTime >= slowestLap) {
       return slowLapClass
     }
     else {
