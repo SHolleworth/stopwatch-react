@@ -1,67 +1,74 @@
-import React, { useEffect, useState } from 'react'
-import { render } from 'react-dom'
+import React, { useState, useRef } from 'react'
 import './App.css'
+import MainTimer from './components/MainTimer'
+import Buttons from './components/Buttons'
+import Laps from './components/Laps'
 
 const App = () => {
+  const [started, setStarted] = useState(false)
   const [running, setRunning] = useState(false)
-  const [mainStartTime, setMainStartTime] = useState(0)
-  const [lapStartTime, setLapStartTime] = useState(0)
   const [mainTime, setMainTime] = useState(0)
   const [activeLapTime, setActiveLapTime] = useState(0)
-  const [mainSavedTime, setMainSavedTime] = useState(0)
-  const [lapSavedTime, setLapSavedTime] = useState(0)
+  const mainStartTime = useRef(0)
+  const lapStartTime = useRef(0)
+  const mainSavedTime = useRef(0)
+  const lapSavedTime = useRef(0)
   const [makingLap, setMakingLap] = useState(false)
   const [deletingLaps, setDeletingLaps] = useState(false)
-  const [animationId, setAnimationId] = useState(0)
+  const animationId = useRef(0)
+  const slowestLap = useRef(-Infinity)
+  const fastestLap = useRef(Infinity)
 
   const start = () => {
+    mainStartTime.current = Date.now()
+    lapStartTime.current = Date.now()
     setRunning(true)
-    setMainStartTime(Date.now())
-    setLapStartTime(Date.now())
+    runTimer()
+    if(!started)
+      setStarted(true)
   }
 
   const stop = () => {
+    mainSavedTime.current = mainTime
+    lapSavedTime.current = activeLapTime
     setRunning(false)
-    setMainSavedTime(mainTime)
-    setLapSavedTime(activeLapTime)
+    stopTimer()
   }
 
   const reset = () => {
-    setMainSavedTime(0)
+    mainSavedTime.current = 0
+    lapSavedTime.current = 0
+    slowestLap.current = -Infinity
+    fastestLap.current = Infinity
     setMainTime(0)
-    setLapSavedTime(0)
     setActiveLapTime(0)
     setDeletingLaps(true)
+    setStarted(false)
   }
 
   const makeLap = () => {
-    setRunning(false)
     setMakingLap(true)
-    setLapStartTime(Date.now())
-    setLapSavedTime(0)
+    lapStartTime.current = Date.now()
+    lapSavedTime.current = 0
   }
 
   const getElapsedMainTimeInMilliseconds = () => {
-    return Date.now() + mainSavedTime - mainStartTime;
+    return Date.now() + mainSavedTime.current - mainStartTime.current;
   }
 
   const getElapsedLapTimeInMilliseconds = () => {
-    return Date.now() + lapSavedTime - lapStartTime;
+    return Date.now() + lapSavedTime.current - lapStartTime.current;
   }
 
   const runTimer = () => {
     setMainTime(getElapsedMainTimeInMilliseconds())
     setActiveLapTime(getElapsedLapTimeInMilliseconds())
-    setAnimationId(requestAnimationFrame(runTimer))
+    animationId.current = requestAnimationFrame(runTimer)
   }
 
   const stopTimer = () => {
-    cancelAnimationFrame(animationId)
+    cancelAnimationFrame(animationId.current)
   }
-
-  useEffect(() => {
-    running ? runTimer() : stopTimer()
-  }, [running])
 
   return (
     <div className="App">
@@ -71,108 +78,23 @@ const App = () => {
         running={running} 
         start={start} 
         stop={stop} 
-        reset={reset} 
-        makeLap={makeLap}/>
-        <Laps 
+        reset={reset}
+        makeLap={makeLap}
+        />
+        <Laps
+        started={started}
         makingLap={makingLap} 
         setMakingLap={setMakingLap} 
         activeLapTime={activeLapTime} 
         setActiveLapTime={setActiveLapTime}
         deletingLaps={deletingLaps} 
         setDeletingLaps={setDeletingLaps}
-        setRunning={setRunning}/>
+        setRunning={setRunning}
+        slowestLap={slowestLap}
+        fastestLap={fastestLap}/>
       </div>
     </div>
   )
 }
-
-const MainTimer = ({mainTime}) => {
-  return (
-    <div className="main-timer-box">
-      <h1>{renderTime(mainTime)}</h1>
-    </div>
-  )
-}
-
-const Buttons = ({running, start, stop, reset, makeLap}) => {
-
-  const startButton = <button className="start-stop-button button--start-color" onClick={start}><p>Start</p></button>
-  const stopButton =  <button className="start-stop-button button--stop-color" onClick={stop}><p>Stop</p></button>
-  const renderStartStopButton = () => {
-    return running ? stopButton : startButton
-  }
-
-  const resetButton = <button className="reset-lap-button" onClick={reset}><p>Reset</p></button>
-  const lapButton = <button className="reset-lap-button" onClick={makeLap}><p>Lap</p></button>
-  const renderResetLapButton = () => {
-    return running ? lapButton : resetButton
-  }
-
-  return (
-    <div className="button-box">
-      {renderResetLapButton()}
-      {renderStartStopButton()}
-    </div>
-  )
-}
-
-const Laps = (props) => {
-
-  const {
-    makingLap, 
-    setMakingLap, 
-    activeLapTime, 
-    deletingLaps, 
-    setDeletingLaps, 
-    setActiveLapTime,
-    setRunning
-  } = props
-
-  const [lapTimes, setLapTimes] = useState([])
-
-  useEffect(() => {
-    if(makingLap) {
-      setLapTimes([activeLapTime, ...lapTimes])
-      setActiveLapTime(0)
-      setMakingLap(false)
-      setRunning(true)
-    }
-  },[makingLap])
-
-  useEffect(() => {
-    if(deletingLaps) {
-      setLapTimes([])
-      setDeletingLaps(false)
-    }
-  },[deletingLaps])
-
-  const renderLaps = () => {
-    return [activeLapTime, ...lapTimes].map((lapTime, index) => (
-      <div className="lap" key={index}>
-        <p>{'Lap ' + (lapTimes.length - index + 1)}</p>
-        <p>{renderTime(lapTime)}</p>
-      </div>
-    ))
-  }
-
-  return (
-    <div className="laps-box">
-      {renderLaps()}
-    </div>
-  )
-}
-
-const renderTime = (timeInMilliseconds) => {
-  const date = new Date(timeInMilliseconds)
-  const minutes = padTime(date.getMinutes())
-  const seconds = padTime(date.getSeconds())
-  const milliseconds = padTime(Math.floor(date.getMilliseconds() / 10))
-  return minutes + ':' + seconds + "." + milliseconds
-}
-
-const padTime = (time) => {
-  return time.toString().padStart(2, '0')
-}
-
 
 export default App
