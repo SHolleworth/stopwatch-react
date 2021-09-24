@@ -4,9 +4,6 @@ import MainTimer from './components/MainTimer'
 import Buttons from './components/Buttons'
 import Laps from './components/Laps'
 
-let slowestLap = -Infinity
-let fastestLap = Infinity
-
 const getElapsedTimeInMilliseconds = (startTime) => {
   return Date.now() - startTime;
 }
@@ -19,8 +16,8 @@ const App = () => {
   const [lapTimes, setLapTimes] = useState([])
   
   useEffect(() => {
-    const lapStartTime = Date.now() - activeLapTime
     if(running) {
+      const lapStartTime = Date.now() - activeLapTime
       const mainStartTime = Date.now() - mainTime
       const intervalId = setInterval(() => { runTimer(mainStartTime, lapStartTime) }, 16)
       return () => clearInterval(intervalId)
@@ -38,8 +35,6 @@ const App = () => {
   }
 
   const reset = () => {
-    slowestLap = -Infinity
-    fastestLap = Infinity
     setLapTimes([])
     setMainTime(0)
     setActiveLapTime(0)
@@ -47,14 +42,8 @@ const App = () => {
   }
 
   const makeLap = () => {
-    updateFastAndSlowLap(activeLapTime)
     setLapTimes([activeLapTime, ...lapTimes])
     setActiveLapTime(0)  
-  }
-
-  const updateFastAndSlowLap = (lapTime) => {
-    slowestLap = Math.max(lapTime, slowestLap)
-    fastestLap = Math.min(lapTime, fastestLap)
   }
 
   const runTimer = (mainStartTime, lapStartTime) => {
@@ -78,8 +67,6 @@ const App = () => {
         <Laps
         started={started}
         activeLapTime={activeLapTime}
-        slowestLap={slowestLap}
-        fastestLap={fastestLap}
         lapTimes={lapTimes}
         />
       </div>
