@@ -4,7 +4,7 @@ import MainTimer from './components/MainTimer'
 import Buttons from './components/Buttons'
 import Laps from './components/Laps'
 
-const getElapsedTimeInMilliseconds = (startTime) => {
+const getElapsedTimeInMilliseconds = (startTime: number) => {
   return Date.now() - startTime;
 }
 
@@ -13,7 +13,7 @@ const App = () => {
   const [running, setRunning] = useState(false)
   const [activeLapTime, setActiveLapTime] = useState(0)
   const [mainTime, setMainTime] = useState(0)
-  const [lapTimes, setLapTimes] = useState([])
+  const [lapTimes, setLapTimes] = useState<number[]>([])
   
   useEffect(() => {
     if(running) {
@@ -46,7 +46,7 @@ const App = () => {
     setActiveLapTime(0)  
   }
 
-  const runTimer = (mainStartTime, lapStartTime) => {
+  const runTimer = (mainStartTime: number, lapStartTime: number) => {
     setMainTime(getElapsedTimeInMilliseconds(mainStartTime))
     setActiveLapTime(getElapsedTimeInMilliseconds(lapStartTime))
   }

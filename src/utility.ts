@@ -1,4 +1,4 @@
-export const renderTime = (timeInMilliseconds) => {
+export const renderTime = (timeInMilliseconds: number) => {
     const date = new Date(timeInMilliseconds)
     const minutes = padTime(date.getMinutes())
     const seconds = padTime(date.getSeconds())
@@ -6,6 +6,6 @@ export const renderTime = (timeInMilliseconds) => {
     return minutes + ':' + seconds + "." + milliseconds
 }
 
-const padTime = (time) => {
+const padTime = (time: number) => {
     return time.toString().padStart(2, '0')
 }

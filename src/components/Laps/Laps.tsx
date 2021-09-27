@@ -1,7 +1,7 @@
 import React from "react"
 import { renderTime } from '../../utility'
 
-const Laps = ({started, activeLapTime, lapTimes}) => {
+const Laps = ({started, activeLapTime, lapTimes}: LapsType) => {
 
   const fastLapClass = lapTimes.length > 1 ? "lap--fast-color" : "lap--mask-color"
   const slowLapClass = lapTimes.length > 1 ? "lap--slow-color" : "lap--mask-color"
@@ -23,7 +23,7 @@ const Laps = ({started, activeLapTime, lapTimes}) => {
     fastInd: -1 
   })
 
-  const addColorClass = (index) => {
+  const addColorClass = (index: number) => {
     if(index < 0) return
     if(fastInd === index) {
       return fastLapClass
@@ -37,7 +37,7 @@ const Laps = ({started, activeLapTime, lapTimes}) => {
   }
 
   const renderEmptyLaps = () => {
-    const length = Math.max(0, 7 - lapTimes.length - started)
+    const length = Math.max(0, 7 - lapTimes.length - (started ? 1 : 0))
     return new Array(length).fill(0, 0, length).map((el, index) => (
       <div className={"lap"} key={index} />
     ))

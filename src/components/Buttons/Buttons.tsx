@@ -1,6 +1,6 @@
 import React from "react"
 
-const Buttons = ({running, start, stop, reset, makeLap}) => {
+const Buttons = ({running, start, stop, reset, makeLap}: ButtonsType) => {
 
   const startButton = <button className="start-stop-button button--start-color" onClick={start}><p>Start</p></button>
   const stopButton =  <button className="start-stop-button button--stop-color" onClick={stop}><p>Stop</p></button>
