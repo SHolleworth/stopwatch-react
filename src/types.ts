@@ -8,6 +8,6 @@ type ButtonsType = {
 
 type LapsType = {
     started: boolean
-    activeLapTime: number
+    elapsedTime: number
     lapTimes: number[]
 }

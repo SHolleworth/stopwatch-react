@@ -3,31 +3,18 @@ import './App.css'
 import MainTimer from './components/MainTimer'
 import Buttons from './components/Buttons'
 import Laps from './components/Laps'
-
-const getElapsedTimeInMilliseconds = (startTime: number) => {
-  return Date.now() - startTime;
-}
+import useTimer from './hooks/useTimer'
 
 const App = () => {
-  const [started, setStarted] = useState(false)
   const [running, setRunning] = useState(false)
-  const [activeLapTime, setActiveLapTime] = useState(0)
-  const [mainTime, setMainTime] = useState(0)
-  const [lapTimes, setLapTimes] = useState<number[]>([])
-  
-  useEffect(() => {
-    if(running) {
-      const lapStartTime = Date.now() - activeLapTime
-      const mainStartTime = Date.now() - mainTime
-      const intervalId = setInterval(() => { runTimer(mainStartTime, lapStartTime) }, 16)
-      return () => clearInterval(intervalId)
-    }
-  },[running, lapTimes])
+  const [lapData, setLapData] = useState<{ times: number[], totalTime: number }>({
+    times: [],
+    totalTime: 0
+  })
+  const mainTimer = useTimer(running)
   
   const start = () => {
     setRunning(true)
-    if(!started)
-      setStarted(true)
   }
 
   const stop = () => {
@@ -35,27 +22,26 @@ const App = () => {
   }
 
   const reset = () => {
-    setLapTimes([])
-    setMainTime(0)
-    setActiveLapTime(0)
-    setStarted(false)
+    setLapData({ times: [], totalTime: 0 })
+    mainTimer.resetTimer()
   }
 
   const makeLap = () => {
-    setLapTimes([activeLapTime, ...lapTimes])
-    setActiveLapTime(0)  
+    setLapData({
+      times: [getActiveLapTime(), ...lapData.times],
+      totalTime: lapData.totalTime + getActiveLapTime()
+    })
   }
 
-  const runTimer = (mainStartTime: number, lapStartTime: number) => {
-    setMainTime(getElapsedTimeInMilliseconds(mainStartTime))
-    setActiveLapTime(getElapsedTimeInMilliseconds(lapStartTime))
+  const getActiveLapTime = () => {
+    return mainTimer.elapsedTime - lapData.totalTime
   }
 
   return (
     <div className="App">
       <div className="background">
         <MainTimer 
-        mainTime={mainTime}
+        elapsedTime={mainTimer.elapsedTime}
         />
         <Buttons 
         running={running} 
@@ -65,9 +51,9 @@ const App = () => {
         makeLap={makeLap}
         />
         <Laps
-        started={started}
-        activeLapTime={activeLapTime}
-        lapTimes={lapTimes}
+        started={mainTimer.elapsedTime !== 0}
+        elapsedTime={getActiveLapTime()}
+        lapTimes={lapData.times}
         />
       </div>
     </div>

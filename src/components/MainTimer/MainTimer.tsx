@@ -1,10 +1,10 @@
 import React from "react"
 import { renderTime } from '../../utility'
 
-const MainTimer = ({ mainTime }: { mainTime: number }) => {
+const MainTimer = ({ elapsedTime }: { elapsedTime: number }) => {
   return (
     <div className="main-timer-box">
-      <h1>{renderTime(mainTime)}</h1>
+      <h1>{renderTime(elapsedTime)}</h1>
     </div>
   )
 }
