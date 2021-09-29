@@ -1,1 +1,1 @@
-export {default} from './MainTimer'
+export { default } from "./MainTimer"

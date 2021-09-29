@@ -1,13 +1,13 @@
-type ButtonsType = {
-    running: boolean
-    start: () => void
-    stop: () => void
-    reset: () => void
-    makeLap: () => void
+export type ButtonsType = {
+	running: boolean
+	startTimer: () => void
+	stopTimer: () => void
+	resetTimer: () => void
+	makeLap: () => void
 }
 
-type LapsType = {
-    started: boolean
-    elapsedTime: number
-    lapTimes: number[]
+export type LapsType = {
+	started: boolean
+	elapsedTime: number
+	lapTimes: number[]
 }
