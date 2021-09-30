@@ -4,5 +4,7 @@ jobs:
     setup-and-build:
         runs-on: ubuntu-latest
         steps:
-            - run: npm install
-            - run: ./.github/scripts/build.sh
+        - name: Setup Node.js environment
+          uses: actions/setup-node@v2.4.1
+        - run: npm install
+        - run: ./.github/scripts/build.sh
