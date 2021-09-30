@@ -13,7 +13,7 @@ const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
 				acc.slowInd = ind
 			}
 			if (lap < acc.fastLap) {
-				acc.fastLap = lap
+				acc.fastLap = lap 
 				acc.fastInd = ind
 			}
 			return acc
@@ -37,31 +37,32 @@ const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
 		}
 	}
 
-	const renderEmptyLaps = () => {
-		const length = Math.max(0, 7 - lapTimes.length - (started ? 1 : 0))
-		return new Array(length).fill(0, 0, length).map((el, index) => <div className={"lap"} key={index} />)
-	}
+	const length = Math.max(0, 7 - lapTimes.length - (started ? 1 : 0))
 
-	const renderLaps = () => {
-		return started
-			? [elapsedTime, ...lapTimes].map((lapTime, index) => {
-					const lapNumber = lapTimes.length - index + 1
-					return (
-						<div className={"lap " + addColorClass(index - 1)} key={lapNumber}>
-							<p>{"Lap " + lapNumber}</p>
-							<p>{renderTime(lapTime)}</p>
-						</div>
-					)
-			  })
-			: null
-	}
+	const emptyLaps = new Array(length).fill(0, 0, length).map((el, index) => <div className={"lap"} key={index} />)
+
+	const laps = started
+		? [elapsedTime, ...lapTimes].map((lapTime, index) => {
+				const lapNumber = lapTimes.length - index + 1
+				return (
+					<div className={"lap " + addColorClass(index - 1)} key={lapNumber}>
+						<p>{"Lap " + lapNumber}</p>
+						<p>{renderTime(lapTime)}</p>
+					</div>
+				)
+		  })
+		: null
 
 	return (
 		<div className="laps-box">
-			{renderLaps()}
-			{renderEmptyLaps()}
+			{laps}
+			{emptyLaps}
 		</div>
 	)
+}
+
+export const SomeComponent = () => {
+	return <div></div>
 }
 
 export default Laps

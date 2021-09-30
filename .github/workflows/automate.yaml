@@ -1,7 +1,11 @@
 name: Automated Build Actions
 on: [push]
 jobs:
-  Explore-Githb.Actions:
-    runs-on: ubuntu-latest
-    steps: 
-      
+    setup-and-build:
+        steps:
+            run: npm install
+            run: npm pret
+            run: npm lint
+            run: npm test
+            run: npm run tsc
+            run: npm build
