@@ -1,0 +1,7 @@
+name: Automated Build Actions
+on: [push]
+jobs:
+  Explore-Githb.Actions:
+    runs-on: ubuntu-latest
+    steps: 
+      
