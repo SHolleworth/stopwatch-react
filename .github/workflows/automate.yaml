@@ -2,6 +2,7 @@ name: Automated Build Actions
 on: [push]
 jobs:
     setup-and-build:
+        runs-on: ubuntu-latest
         steps:
             - run: npm install
             - run: npm pret
