@@ -3,9 +3,9 @@ on: [push]
 jobs:
     setup-and-build:
         steps:
-            run: npm install
-            run: npm pret
-            run: npm lint
-            run: npm test
-            run: npm run tsc
-            run: npm build
+            - run: npm install
+            - run: npm pret
+            - run: npm lint
+            - run: npm test
+            - run: npm run tsc
+            - run: npm build
