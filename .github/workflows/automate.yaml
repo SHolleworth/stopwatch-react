@@ -5,8 +5,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - run: npm install
-            - run: npm pret
-            - run: npm lint
-            - run: npm test
+            - run: npm run pret
+            - run: npm run lint
+            - run: npm run test
             - run: npm run tsc
-            - run: npm build
+            - run: npm run build
