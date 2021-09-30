@@ -5,8 +5,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - run: npm install
-            - run: npm run pret
-            - run: npm run lint
-            - run: npm run test
-            - run: npm run tsc
-            - run: npm run build
+            - run: ./.github/scripts/build.sh
