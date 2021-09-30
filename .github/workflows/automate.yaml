@@ -6,5 +6,8 @@ jobs:
         steps:
         - name: Setup Node.js environment
           uses: actions/setup-node@v2.4.1
+          with:
+            cache: npm
+            cache-dependency-path: package-lock.json
         - run: npm install
         - run: ./.github/scripts/build.sh
