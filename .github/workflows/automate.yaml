@@ -8,6 +8,6 @@ jobs:
           with:
             node-version: '16'
             cache: 'npm'
-            cache-dependencies: './package-lock.json'
+            cache-dependency-path: './package-lock.json'
         - run: npm install
         - run: ./.github/scripts/build.sh
