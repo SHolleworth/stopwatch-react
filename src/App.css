@@ -61,10 +61,10 @@ p {
 }
 
 .main-timer-box {
+	flex: 0.9;
 	display: flex;
 	justify-content: center;
 	align-items: flex-end;
-	flex: 0.9;
 }
 
 .main-timer-box h1 {
@@ -73,8 +73,8 @@ p {
 }
 
 .button-box {
-	display: flex;
 	flex: 0.3;
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 20px;
@@ -94,62 +94,14 @@ button {
 	margin-right: 5px;
 }
 
-.button--start-color {
-	background-color: var(--start-button-color);
-}
-
-.button--start-color:hover {
-	background-color: var(--start-button-hover-color);
-}
-
-.button--start-color:active {
-	background-color: var(--start-button-active-color);
-}
-
-.button--stop-color {
-	background-color: var(--stop-button-color);
-}
-
-.button--stop-color:hover {
-	background-color: var(--stop-button-hover-color);
-}
-
-.button--stop-color:active {
-	background-color: var(--stop-button-active-color);
-}
-
-.button--start-color p {
-	color: var(--start-button-p-color);
-}
-
-.button--stop-color p {
-	color: var(--stop-button-p-color);
-}
-
-.reset-lap-button {
-	background-color: var(--reset-lap-color);
-}
-
-.reset-lap-button:hover {
-	background-color: var(--reset-lap-hover-color);
-}
-
-.reset-lap-button:active {
-	background-color: var(--reset-lap-active-color);
-}
-
-.reset-lap-button p {
-	color: var(--reset-lap-button-p-color);
-}
-
 .laps-box {
+	flex: 1;
 	border-top-width: 1px;
 	border-top-style: solid;
 	border-color: var(--lap-border-color);
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding-right: 10px;
-	flex: 1;
 }
 
 .laps-box::-webkit-scrollbar {
@@ -200,4 +152,52 @@ button {
 
 .lap--mask-color p {
 	color: var(--normal-lap-color);
+}
+
+.button--start-color {
+	background-color: var(--start-button-color);
+}
+
+.button--start-color:hover {
+	background-color: var(--start-button-hover-color);
+}
+
+.button--start-color:active {
+	background-color: var(--start-button-active-color);
+}
+
+.button--stop-color {
+	background-color: var(--stop-button-color);
+}
+
+.button--stop-color:hover {
+	background-color: var(--stop-button-hover-color);
+}
+
+.button--stop-color:active {
+	background-color: var(--stop-button-active-color);
+}
+
+.button--start-color p {
+	color: var(--start-button-p-color);
+}
+
+.button--stop-color p {
+	color: var(--stop-button-p-color);
+}
+
+.reset-lap-button {
+	background-color: var(--reset-lap-color);
+}
+
+.reset-lap-button:hover {
+	background-color: var(--reset-lap-hover-color);
+}
+
+.reset-lap-button:active {
+	background-color: var(--reset-lap-active-color);
+}
+
+.reset-lap-button p {
+	color: var(--reset-lap-button-p-color);
 }

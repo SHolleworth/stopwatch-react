@@ -3,9 +3,6 @@ import { renderTime } from "../../utility"
 import { LapsType } from "../../types"
 
 const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
-	const fastLapClass = lapTimes.length > 1 ? "lap--fast-color" : "lap--mask-color"
-	const slowLapClass = lapTimes.length > 1 ? "lap--slow-color" : "lap--mask-color"
-
 	const { slowInd, fastInd } = lapTimes.reduce(
 		(acc, lap, ind) => {
 			if (lap > acc.slowLap) {
@@ -13,7 +10,7 @@ const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
 				acc.slowInd = ind
 			}
 			if (lap < acc.fastLap) {
-				acc.fastLap = lap 
+				acc.fastLap = lap
 				acc.fastInd = ind
 			}
 			return acc
@@ -25,6 +22,9 @@ const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
 			fastInd: -1,
 		},
 	)
+
+	const fastLapClass = lapTimes.length > 1 ? "lap--fast-color" : "lap--mask-color"
+	const slowLapClass = lapTimes.length > 1 ? "lap--slow-color" : "lap--mask-color"
 
 	const addColorClass = (index: number) => {
 		if (index < 0) return
@@ -59,10 +59,6 @@ const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
 			{emptyLaps}
 		</div>
 	)
-}
-
-export const SomeComponent = () => {
-	return <div></div>
 }
 
 export default Laps
