@@ -4,11 +4,11 @@ jobs:
     setup-and-build:
         runs-on: ubuntu-latest
         steps:
-            - name: Setup Node.js environment
-            - uses: actions/checkout@v2.3.4
-            - uses: actions/setup-node@v2.4.1
-              with:
-                  cache: npm
-                  cache-dependency-path: ./package-lock.json
-            - run: npm install
-            - run: ./.github/scripts/build.sh
+        - run: ls
+        - uses: actions/setup-node@v2.4.1
+          with:
+            node-version: '16'
+            cache: 'npm'
+            cache-dependency-path: './package-lock.json'
+        - run: npm install
+        - run: ./.github/scripts/build.sh
