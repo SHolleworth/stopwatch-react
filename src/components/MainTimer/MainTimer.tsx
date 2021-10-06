@@ -4,12 +4,17 @@ import { TimerPropsType } from "../../types"
 import { renderTime } from "../../utility"
 
 const MainTimer = ({ timerProps }: { timerProps: TimerPropsType }) => {
-	const timer = useTimer(timerProps)
+	
 	return (
 		<div className="main-timer-box">
-			<h1>{renderTime(timer.elapsedTime)}</h1>
+			<Time timerProps={timerProps} />
 		</div>
 	)
+}
+
+const Time = ({ timerProps }: { timerProps: TimerPropsType }) => {
+	const timer = useTimer(timerProps)
+	return <h1>{renderTime(timer.elapsedTime)}</h1>
 }
 
 export default MainTimer
