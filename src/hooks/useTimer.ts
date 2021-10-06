@@ -8,19 +8,15 @@ const useTimer = ({ isRunning, timestamp }: TimerPropsType) => {
 		if (isRunning) {
 			const startTime = timestamp - elapsedTime
 			const intervalId = setInterval(() => {
-				setElapsedTime(Math.max(Date.now() - startTime, 0))
+				setElapsedTime(Date.now() - startTime)
 			}, 16)
 			return () => clearInterval(intervalId)
 		} else if(timestamp === 0) {
-			resetTimer()
+			setElapsedTime(0)
 		}
 	}, [isRunning, timestamp])
 
-	const resetTimer = () => {
-		setElapsedTime(0)
-	}
-
-	return { elapsedTime, resetTimer }
+	return { elapsedTime }
 }
 
 export default useTimer
