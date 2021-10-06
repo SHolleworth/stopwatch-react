@@ -6,8 +6,23 @@ export type ButtonsType = {
 	makeLap: () => void
 }
 
+export interface TimerData {
+	timestamp: number
+	savedTime: number
+}
+
+export interface LapData extends TimerData {
+	times: number[]
+	totalTime: number
+}
+
 export type LapsType = {
 	started: boolean
-	elapsedTime: number
-	lapTimes: number[]
+	timerProps: TimerPropsType
+	lapData: LapData
+}
+
+export type TimerPropsType = {
+	isRunning: boolean
+	timestamp: number
 }

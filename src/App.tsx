@@ -7,22 +7,23 @@ import useTimer from "./hooks/useTimer"
 import reducer, { ACTIONS, initialState } from "./reducer"
 
 const App = () => {
-	const [{ isRunning, lapData }, dispatch] = useReducer(reducer, initialState)
-	const mainTimer = useTimer(isRunning)
-	const lapTime = mainTimer.elapsedTime - lapData.totalTime
+	const [{ isRunning, mainData, lapData }, dispatch] = useReducer(reducer, initialState)
+
+	const timerProps = { isRunning, timestamp: mainData.timestamp  }
+	const lapTimerProps = { isRunning, timestamp: lapData.timestamp }
 
 	return (
 		<div className="App">
 			<div className="background">
-				<MainTimer elapsedTime={mainTimer.elapsedTime} />
+				<MainTimer timerProps={timerProps} />
 				<Buttons
 					running={isRunning}
 					startTimer={() => dispatch({ type: ACTIONS.START_TIMER, payload: null })}
 					stopTimer={() => dispatch({ type: ACTIONS.PAUSE_TIMER, payload: null })}
-					resetTimer={() => dispatch({ type: ACTIONS.RESET_TIMER, payload: mainTimer.resetTimer })}
-					makeLap={() => dispatch({ type: ACTIONS.MAKE_LAP, payload: lapTime })}
+					resetTimer={() => dispatch({ type: ACTIONS.RESET_TIMER, payload: null })}
+					makeLap={() => dispatch({ type: ACTIONS.MAKE_LAP, payload: null })}
 				/>
-				<Laps started={mainTimer.elapsedTime !== 0} elapsedTime={lapTime} lapTimes={lapData.times} />
+				<Laps started={lapData.timestamp > 0} timerProps={lapTimerProps} lapData={lapData} />
 			</div>
 		</div>
 	)
