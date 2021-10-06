@@ -1,14 +1,14 @@
 import { LapData, TimerData } from "./types"
 
-type stateType = {	
+type stateType = {
 	isRunning: boolean
 	mainData: TimerData
 	lapData: LapData
 }
 
 type actionType = {
-	type: string,
-    payload: any
+	type: string
+	payload: any
 }
 
 export const ACTIONS = {
@@ -33,37 +33,37 @@ export const initialState = {
 	},
 }
 
-const reducer =  (state: stateType, action: actionType) => {
+const reducer = (state: stateType, action: actionType) => {
 	switch (action.type) {
 		case ACTIONS.START_TIMER:
-			return { 
-				...state, 
+			return {
+				...state,
 				isRunning: true,
 				mainData: {
 					...state.mainData,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				},
 				lapData: {
 					...state.lapData,
-					timestamp: Date.now()
-				}
+					timestamp: Date.now(),
+				},
 			}
 
 		case ACTIONS.PAUSE_TIMER:
-			return { 
-				...state, 
-				isRunning: false, 
-				lapData: { 
-					...state.lapData, 
-					savedTime: Date.now() - state.lapData.timestamp + state.lapData.savedTime
-				}  
+			return {
+				...state,
+				isRunning: false,
+				lapData: {
+					...state.lapData,
+					savedTime: Date.now() - state.lapData.timestamp + state.lapData.savedTime,
+				},
 			}
 
 		case ACTIONS.RESET_TIMER:
-			return initialState;
+			return initialState
 
 		case ACTIONS.MAKE_LAP:
-			const newLapTime = (Date.now() - state.lapData.timestamp) + state.lapData.savedTime
+			const newLapTime = Date.now() - state.lapData.timestamp + state.lapData.savedTime
 			return {
 				...state,
 				lapData: {

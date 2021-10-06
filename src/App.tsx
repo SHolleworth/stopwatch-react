@@ -8,7 +8,7 @@ import reducer, { ACTIONS, initialState } from "./reducer"
 const App = () => {
 	const [{ isRunning, mainData, lapData }, dispatch] = useReducer(reducer, initialState)
 
-	const mainTimerProps = { isRunning, timestamp: mainData.timestamp  }
+	const mainTimerProps = { isRunning, timestamp: mainData.timestamp }
 	const lapTimerProps = { isRunning, timestamp: lapData.timestamp }
 
 	return (

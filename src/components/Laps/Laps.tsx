@@ -1,10 +1,9 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { renderTime } from "../../utility"
 import { LapsType, TimerPropsType } from "../../types"
 import useTimer from "../../hooks/useTimer"
 
 const Laps = ({ started, timerProps, lapData }: LapsType) => {
-
 	const { times: lapTimes, totalTime: totalLapTime } = lapData
 
 	const { slowInd, fastInd } = lapTimes.reduce(
@@ -46,18 +45,16 @@ const Laps = ({ started, timerProps, lapData }: LapsType) => {
 	const emptyLaps = new Array(length).fill(0, 0, length).map((el, index) => <div className={"lap"} key={index} />)
 
 	const laps = lapTimes.map((lapTime, index) => {
-				const lapNumber = lapTimes.length - index
-				const colorClass = addColorClass(index)
-				return (
-					<Lap colorClass={colorClass} lapNumber={lapNumber} lapTime={lapTime}/>
-				)
-		  })
+		const lapNumber = lapTimes.length - index
+		const colorClass = addColorClass(index)
+		return <Lap colorClass={colorClass} lapNumber={lapNumber} lapTime={lapTime} key={lapNumber}/>
+	})
 
-	return  (
+	return (
 		<div className="laps-box">
-			{started ? 
-			<ActiveLap lapNumber={lapTimes.length + 1} timerProps={timerProps} totalLapTime={totalLapTime}/>
-			: null}
+			{started ? (
+				<ActiveLap lapNumber={lapTimes.length + 1} timerProps={timerProps} totalLapTime={totalLapTime} />
+			) : null}
 			{laps}
 			{emptyLaps}
 		</div>
@@ -70,14 +67,21 @@ type LapType = {
 	lapTime: number
 }
 
-const ActiveLap = ({ lapNumber, timerProps, totalLapTime }: { lapNumber: number, timerProps: TimerPropsType, totalLapTime: number }) => {
-
+const ActiveLap = ({
+	lapNumber,
+	timerProps,
+	totalLapTime,
+}: {
+	lapNumber: number
+	timerProps: TimerPropsType
+	totalLapTime: number
+}) => {
 	const timer = useTimer(timerProps)
 
 	return <Lap colorClass={""} lapNumber={lapNumber} lapTime={timer.elapsedTime - totalLapTime} />
 }
 
-const Lap = ({ colorClass, lapNumber, lapTime}: LapType) => {
+const Lap = ({ colorClass, lapNumber, lapTime }: LapType) => {
 	return (
 		<div className={"lap " + colorClass} key={lapNumber}>
 			<p>{"Lap " + lapNumber}</p>

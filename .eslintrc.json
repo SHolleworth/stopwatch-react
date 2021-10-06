@@ -22,6 +22,7 @@
 	"ignorePatterns": ["dist/*", "comp/*", "node_modules/*", "jest.config.ts"],
 	"rules": {
 		"react-hooks/exhaustive-deps": "off",
-		"@typescript-eslint/explicit-module-boundary-types": "off"
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"no-case-declarations": "off"
 	}
 }
