@@ -47,7 +47,7 @@ const Laps = ({ started, timerProps, lapData }: LapsType) => {
 	const laps = lapTimes.map((lapTime, index) => {
 		const lapNumber = lapTimes.length - index
 		const colorClass = addColorClass(index)
-		return <Lap colorClass={colorClass} lapNumber={lapNumber} lapTime={lapTime} key={lapNumber}/>
+		return <Lap colorClass={colorClass} lapNumber={lapNumber} lapTime={lapTime} key={lapNumber} />
 	})
 
 	return (
