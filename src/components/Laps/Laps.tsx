@@ -47,7 +47,7 @@ const Laps = ({ started, timerProps, lapData }: LapsType) => {
 
 	const laps = lapTimes.map((lapTime, index) => {
 				const lapNumber = lapTimes.length - index
-				const colorClass = addColorClass(index - 1)
+				const colorClass = addColorClass(index)
 				return (
 					<Lap colorClass={colorClass} lapNumber={lapNumber} lapTime={lapTime}/>
 				)
@@ -73,10 +73,6 @@ type LapType = {
 const ActiveLap = ({ lapNumber, timerProps, totalLapTime }: { lapNumber: number, timerProps: TimerPropsType, totalLapTime: number }) => {
 
 	const timer = useTimer(timerProps)
-
-	useEffect(() => {
-		timer.resetTimer()
-	}, [totalLapTime])
 
 	return <Lap colorClass={""} lapNumber={lapNumber} lapTime={timer.elapsedTime - totalLapTime} />
 }

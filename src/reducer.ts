@@ -55,9 +55,10 @@ const reducer =  (state: stateType, action: actionType) => {
 				isRunning: false, 
 				lapData: { 
 					...state.lapData, 
-					savedTime: Date.now() - state.lapData.timestamp
+					savedTime: Date.now() - state.lapData.timestamp + state.lapData.savedTime
 				}  
 			}
+
 		case ACTIONS.RESET_TIMER:
 			return { 
 				...state,
@@ -72,8 +73,9 @@ const reducer =  (state: stateType, action: actionType) => {
 					totalTime: 0 
 				}
 			 }
+
 		case ACTIONS.MAKE_LAP:
-			const newLapTime = Date.now() - state.lapData.timestamp - state.lapData.savedTime
+			const newLapTime = (Date.now() - state.lapData.timestamp) + state.lapData.savedTime
 			return {
 				...state,
 				lapData: {
@@ -83,6 +85,7 @@ const reducer =  (state: stateType, action: actionType) => {
 					totalTime: state.lapData.totalTime + newLapTime,
 				},
 			}
+			
 		default:
 			throw new Error("Error: Action type not recognised.")
 	}
