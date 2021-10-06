@@ -1,4 +1,5 @@
-type stateType = {	isRunning: boolean
+type stateType = {
+	isRunning: boolean
 	lapData: {
 		times: number[]
 		totalTime: number
@@ -6,8 +7,8 @@ type stateType = {	isRunning: boolean
 }
 
 type actionType = {
-	type: string,
-    payload: any
+	type: string
+	payload: any
 }
 
 export const ACTIONS = {
@@ -26,7 +27,7 @@ export const initialState = {
 	},
 }
 
-const reducer =  (state: stateType, action: actionType) => {
+const reducer = (state: stateType, action: actionType) => {
 	switch (action.type) {
 		case ACTIONS.START_TIMER:
 			return { ...state, isRunning: true }
