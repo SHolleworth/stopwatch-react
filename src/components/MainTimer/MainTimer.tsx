@@ -4,7 +4,6 @@ import { TimerPropsType } from "../../types"
 import { renderTime } from "../../utility"
 
 const MainTimer = ({ timerProps }: { timerProps: TimerPropsType }) => {
-	
 	return (
 		<div className="main-timer-box">
 			<Time timerProps={timerProps} />

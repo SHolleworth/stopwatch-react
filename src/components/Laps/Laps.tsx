@@ -61,24 +61,22 @@ const Laps = ({ started, timerProps, lapData }: LapsType) => {
 	)
 }
 
+type ActiveLapType = {
+	lapNumber: number
+	timerProps: TimerPropsType
+	totalLapTime: number
+}
+
+const ActiveLap = ({ lapNumber, timerProps, totalLapTime }: ActiveLapType) => {
+	const timer = useTimer(timerProps)
+
+	return <Lap colorClass={""} lapNumber={lapNumber} lapTime={timer.elapsedTime - totalLapTime} />
+}
+
 type LapType = {
 	colorClass: string
 	lapNumber: number
 	lapTime: number
-}
-
-const ActiveLap = ({
-	lapNumber,
-	timerProps,
-	totalLapTime,
-}: {
-	lapNumber: number
-	timerProps: TimerPropsType
-	totalLapTime: number
-}) => {
-	const timer = useTimer(timerProps)
-
-	return <Lap colorClass={""} lapNumber={lapNumber} lapTime={timer.elapsedTime - totalLapTime} />
 }
 
 const Lap = ({ colorClass, lapNumber, lapTime }: LapType) => {
