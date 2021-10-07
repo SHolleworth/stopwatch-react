@@ -8,7 +8,5 @@ jobs:
             - uses: actions/setup-node@v2.4.1
               with:
                   node-version: "16"
-                  cache: "npm"
-                  cache-dependency-path: "./package-lock.json"
             - run: npm install
             - run: ./.github/scripts/build.sh
