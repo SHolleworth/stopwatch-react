@@ -29,12 +29,12 @@ const Buttons = ({ started, running, startTimer, stopTimer, resetTimer, makeLap 
 			<p>Lap</p>
 		</button>
 	)
-	const resetLapButton = () =>  started ? (running ? lapButton : resetButton) : lapButtonDisabled
+	const resetLapButton = () => (started ? (running ? lapButton : resetButton) : lapButtonDisabled)
 
 	return (
 		<div className="button-box">
-			{ resetLapButton() }
-			{ startStopButton }
+			{resetLapButton()}
+			{startStopButton}
 		</div>
 	)
 }
