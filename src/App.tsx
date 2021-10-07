@@ -20,10 +20,10 @@ const App = () => {
 				<Buttons
 					started={started}
 					running={isRunning}
-					startTimer={() => dispatch({ type: ACTIONS.START_TIMER, payload: null })}
-					stopTimer={() => dispatch({ type: ACTIONS.PAUSE_TIMER, payload: null })}
-					resetTimer={() => dispatch({ type: ACTIONS.RESET_TIMER, payload: null })}
-					makeLap={() => dispatch({ type: ACTIONS.MAKE_LAP, payload: null })}
+					startTimer={() => dispatch({ type: ACTIONS.START_TIMER })}
+					stopTimer={() => dispatch({ type: ACTIONS.PAUSE_TIMER })}
+					resetTimer={() => dispatch({ type: ACTIONS.RESET_TIMER })}
+					makeLap={() => dispatch({ type: ACTIONS.MAKE_LAP })}
 				/>
 				<Laps started={started} timerProps={lapTimerProps} lapData={lapData} />
 			</div>

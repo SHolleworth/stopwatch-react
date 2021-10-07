@@ -25,7 +25,7 @@ const Buttons = ({ started, running, startTimer, stopTimer, resetTimer, makeLap 
 		</button>
 	)
 	const lapButtonDisabled = (
-		<button className="reset-lap-button reset-lap-button__disabled" disabled={true} onClick={makeLap}>
+		<button className="reset-lap-button__disabled" disabled={true} onClick={makeLap}>
 			<p>Lap</p>
 		</button>
 	)

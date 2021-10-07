@@ -8,7 +8,6 @@ type stateType = {
 
 type actionType = {
 	type: string
-	payload: any
 }
 
 export const ACTIONS = {

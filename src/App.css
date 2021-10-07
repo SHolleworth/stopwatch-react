@@ -203,5 +203,10 @@ button {
 }
 
 .reset-lap-button__disabled {
+	background-color: var(--reset-lap-color);
 	opacity: 0.7;
+}
+
+.reset-lap-button__disabled p {
+	color: var(--reset-lap-button-p-color);
 }
