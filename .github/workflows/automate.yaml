@@ -9,4 +9,8 @@ jobs:
               with:
                   node-version: "16"
             - run: npm install
-            - run: ./.github/scripts/build.sh
+            - run: npm run pret
+            - run: npm run lint
+            - run: npm run test
+            - run: npm run tsc
+            - run: npm run build
