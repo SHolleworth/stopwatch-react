@@ -4,7 +4,6 @@ jobs:
     setup-and-build:
         runs-on: ubuntu-latest
         steps:
-            - run: ls
             - uses: actions/setup-node@v2.4.1
               with:
                   node-version: "16"
