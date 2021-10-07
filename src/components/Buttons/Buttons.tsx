@@ -1,7 +1,7 @@
 import React from "react"
 import { ButtonsType } from "../../types"
 
-const Buttons = ({ running, startTimer, stopTimer, resetTimer, makeLap }: ButtonsType) => {
+const Buttons = ({ started, running, startTimer, stopTimer, resetTimer, makeLap }: ButtonsType) => {
 	const startButton = (
 		<button className="start-stop-button button--start-color" onClick={startTimer}>
 			<p>Start</p>
@@ -12,9 +12,7 @@ const Buttons = ({ running, startTimer, stopTimer, resetTimer, makeLap }: Button
 			<p>Stop</p>
 		</button>
 	)
-	const renderStartStopButton = () => {
-		return running ? stopButton : startButton
-	}
+	const startStopButton = running ? stopButton : startButton
 
 	const resetButton = (
 		<button className="reset-lap-button" onClick={resetTimer}>
@@ -26,14 +24,17 @@ const Buttons = ({ running, startTimer, stopTimer, resetTimer, makeLap }: Button
 			<p>Lap</p>
 		</button>
 	)
-	const renderResetLapButton = () => {
-		return running ? lapButton : resetButton
-	}
+	const lapButtonDisabled = (
+		<button className="reset-lap-button reset-lap-button__disabled" disabled={true} onClick={makeLap}>
+			<p>Lap</p>
+		</button>
+	)
+	const resetLapButton = () =>  started ? (running ? lapButton : resetButton) : lapButtonDisabled
 
 	return (
 		<div className="button-box">
-			{renderResetLapButton()}
-			{renderStartStopButton()}
+			{ resetLapButton() }
+			{ startStopButton }
 		</div>
 	)
 }

@@ -1,4 +1,5 @@
 export type ButtonsType = {
+	started: boolean
 	running: boolean
 	startTimer: () => void
 	stopTimer: () => void

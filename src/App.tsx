@@ -11,18 +11,21 @@ const App = () => {
 	const mainTimerProps = { isRunning, timestamp: mainData.timestamp }
 	const lapTimerProps = { isRunning, timestamp: lapData.timestamp }
 
+	const started = lapData.timestamp > 0
+
 	return (
 		<div className="App">
 			<div className="background">
 				<MainTimer timerProps={mainTimerProps} />
 				<Buttons
+					started={started}
 					running={isRunning}
 					startTimer={() => dispatch({ type: ACTIONS.START_TIMER, payload: null })}
 					stopTimer={() => dispatch({ type: ACTIONS.PAUSE_TIMER, payload: null })}
 					resetTimer={() => dispatch({ type: ACTIONS.RESET_TIMER, payload: null })}
 					makeLap={() => dispatch({ type: ACTIONS.MAKE_LAP, payload: null })}
 				/>
-				<Laps started={lapData.timestamp > 0} timerProps={lapTimerProps} lapData={lapData} />
+				<Laps started={started} timerProps={lapTimerProps} lapData={lapData} />
 			</div>
 		</div>
 	)
