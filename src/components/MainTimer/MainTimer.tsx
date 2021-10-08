@@ -6,14 +6,20 @@ import { renderTime } from "../../utility"
 const MainTimer = ({ timerProps }: { timerProps: TimerPropsType }) => {
 	return (
 		<div className="main-timer-box">
-			<Time timerProps={timerProps} />
+			<TimeContainer timerProps={timerProps} />
 		</div>
 	)
 }
 
-const Time = ({ timerProps }: { timerProps: TimerPropsType }) => {
+const TimeContainer = ({ timerProps }: { timerProps: TimerPropsType }) => {
 	const timer = useTimer(timerProps)
-	return <h1>{renderTime(timer.elapsedTime)}</h1>
+	return <TimeDisplay timeInMilliseconds={timer.elapsedTime} />
+}
+
+
+//Container Component pattern for testable display
+const TimeDisplay = ({ timeInMilliseconds }: { timeInMilliseconds: number }) => {
+	return <h1>{renderTime(timeInMilliseconds)}</h1>
 }
 
 export default MainTimer
