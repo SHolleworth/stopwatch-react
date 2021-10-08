@@ -22,6 +22,16 @@
 	--shadow-color: rgba(0, 0, 0, 0.2);
 }
 
+@font-face {
+	font-family: "SF Pro Text Thin";
+	src: url("assets/fonts/SF-Pro-Text-Thin.otf");
+}
+
+@font-face {
+	font-family: "SF Pro Display Ultralight";
+	src: url("assets/fonts/SF-Pro-Display-Ultralight.otf");
+}
+
 .App {
 	display: flex;
 	height: 100vh;
@@ -35,15 +45,15 @@ p {
 }
 
 h1 {
-	font-family: "SF Pro Display Ultralight", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+	font-family: "SF Pro Display Ultralight", "Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", sans-serif;
 	font-weight: 50;
 	font-variant-numeric: tabular-nums;
 }
 
 p {
-	font-family: "SF Pro Text Thin", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-	font-size: 0.75rem;
+	font-family: "SF Pro Text Thin", "Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", sans-serif;
 	font-weight: bold;
+	font-size: 0.75rem;
 	font-variant-numeric: tabular-nums;
 }
 
