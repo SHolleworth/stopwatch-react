@@ -4,11 +4,17 @@ jobs:
     setup-and-build:
         runs-on: ubuntu-latest
         steps:
-            - run: ls
+            - uses: actions/checkout@v2.3.4
             - uses: actions/setup-node@v2.4.1
               with:
                   node-version: "16"
-                  cache: "npm"
-                  cache-dependency-path: "./package-lock.json"
             - run: npm install
-            - run: ./.github/scripts/build.sh
+            - run: npm run pret
+            - run: npm run lint
+            - run: npm run test
+            - run: npm run build
+            - name: Deploy 🚀
+              uses: JamesIves/github-pages-deploy-action@4.1.5
+              with:
+                  branch: gh-pages
+                  folder: dist

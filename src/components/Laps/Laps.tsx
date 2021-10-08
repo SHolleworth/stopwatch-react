@@ -42,7 +42,9 @@ const Laps = ({ started, timerProps, lapData }: LapsType) => {
 
 	const amountOfEmptyLaps = Math.max(0, 7 - lapTimes.length - (started ? 1 : 0))
 
-	const emptyLaps = new Array(amountOfEmptyLaps).fill(0, 0, amountOfEmptyLaps).map((el, index) => <div className={"lap"} key={index} />)
+	const emptyLaps = new Array(amountOfEmptyLaps)
+		.fill(0, 0, amountOfEmptyLaps)
+		.map((el, index) => <div className={"lap"} key={index} />)
 
 	const laps = lapTimes.map((lapTime, index) => {
 		const lapNumber = lapTimes.length - index
@@ -61,8 +63,6 @@ const Laps = ({ started, timerProps, lapData }: LapsType) => {
 	)
 }
 
-
-
 type ActiveLapType = {
 	lapNumber: number
 	timerProps: TimerPropsType
@@ -73,8 +73,6 @@ const ActiveLap = ({ lapNumber, timerProps, totalLapTime }: ActiveLapType) => {
 	const timer = useTimer(timerProps)
 	return <Lap colorClass={""} lapNumber={lapNumber} lapTime={timer.elapsedTime - totalLapTime} />
 }
-
-
 
 type LapType = {
 	colorClass: string

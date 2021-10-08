@@ -16,7 +16,6 @@ const TimeContainer = ({ timerProps }: { timerProps: TimerPropsType }) => {
 	return <TimeDisplay timeInMilliseconds={timer.elapsedTime} />
 }
 
-
 //Container Component pattern for testable display
 const TimeDisplay = ({ timeInMilliseconds }: { timeInMilliseconds: number }) => {
 	return <h1>{renderTime(timeInMilliseconds)}</h1>
