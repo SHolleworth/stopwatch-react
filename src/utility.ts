@@ -1,5 +1,5 @@
 export const renderTime = (timeInMilliseconds: number) => {
-	const date = new Date(timeInMilliseconds)
+	const date = new Date(Math.max(timeInMilliseconds, 0))
 	const minutes = padTime(date.getMinutes())
 	const seconds = padTime(date.getSeconds())
 	const milliseconds = padTime(Math.floor(date.getMilliseconds() / 10))
