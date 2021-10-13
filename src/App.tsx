@@ -22,7 +22,7 @@ const App = () => {
 					resetTimer={resetTimer}
 					makeLap={pushLap}
 				/>
-				<Laps started={true}/>
+				<Laps started={true} />
 			</div>
 		</div>
 	)

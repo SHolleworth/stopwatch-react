@@ -4,7 +4,6 @@ import { LapsType } from "../../types"
 import { useActiveLapTime, useLapData } from "../../streams/stateStream"
 
 const Laps = ({ started }: LapsType) => {
-
 	const lapTimes = useLapData()
 
 	const { slowInd, fastInd } = lapTimes.reduce(
@@ -55,9 +54,7 @@ const Laps = ({ started }: LapsType) => {
 
 	return (
 		<div className="laps-box">
-			{started ? (
-				<ActiveLap lapNumber={lapTimes.length + 1} />
-			) : null}
+			{started ? <ActiveLap lapNumber={lapTimes.length + 1} /> : null}
 			{laps}
 			{emptyLaps}
 		</div>

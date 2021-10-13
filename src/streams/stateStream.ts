@@ -3,7 +3,7 @@ import { map, withLatestFrom, BehaviorSubject, combineLatest, first } from "rxjs
 
 const INITIAL_RUNNING = false
 const INITIAL_TIME = 0
-const INITIAL_LAP_DATA : number[] = []
+const INITIAL_LAP_DATA: number[] = []
 
 const isRunningSubject$ = new BehaviorSubject(INITIAL_RUNNING)
 const elapsedTimeSubject$ = new BehaviorSubject(INITIAL_TIME)
@@ -34,9 +34,12 @@ const unshiftLap = (lapTime: number) => {
 }
 
 const pushLap = () => {
-	activeLapTime$.pipe(first()).subscribe(time => {
-		unshiftLap(time)
-	}).unsubscribe()
+	activeLapTime$
+		.pipe(first())
+		.subscribe(time => {
+			unshiftLap(time)
+		})
+		.unsubscribe()
 }
 
 lapDataSubject$.subscribe(laps => {
@@ -51,13 +54,11 @@ lapDataSubject$.subscribe(laps => {
 
 const activeLapTime$ = combineLatest([
 	elapsedTimeSubject$,
-	lapDataSubject$.pipe(
-		map(laps => laps.reduce((totalTime, laps) => totalTime + laps, 0)))
-])
-.pipe(
+	lapDataSubject$.pipe(map(laps => laps.reduce((totalTime, laps) => totalTime + laps, 0))),
+]).pipe(
 	map(([elapsedTime, totalLapTime]: number[]) => {
 		return elapsedTime - totalLapTime
-	})
+	}),
 )
 
 const isRunningWithLatestElapsedTime$ = isRunningSubject$.pipe(
@@ -67,9 +68,9 @@ const isRunningWithLatestElapsedTime$ = isRunningSubject$.pipe(
 	}),
 )
 
-let intervalId : null | NodeJS.Timer = null
-isRunningWithLatestElapsedTime$.subscribe(({ isRunning, elapsedTime }: { isRunning: boolean, elapsedTime: number}) => {
-	intervalId ? clearInterval(intervalId) : null
+let intervalId: null | NodeJS.Timer = null
+isRunningWithLatestElapsedTime$.subscribe(({ isRunning, elapsedTime }: { isRunning: boolean; elapsedTime: number }) => {
+	if (intervalId) clearInterval(intervalId)
 	if (isRunning) {
 		const start = Date.now() - elapsedTime
 		intervalId = setInterval(() => {
