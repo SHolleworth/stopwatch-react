@@ -1,4 +1,5 @@
-type stateType = {	isRunning: boolean
+type stateType = {	
+	isRunning: boolean
 	lapData: {
 		times: number[]
 		totalTime: number
