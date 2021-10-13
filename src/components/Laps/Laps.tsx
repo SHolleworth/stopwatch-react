@@ -1,10 +1,11 @@
 import React from "react"
 import { renderTime } from "../../utility"
-import { LapsType, TimerPropsType } from "../../types"
-import useTimer from "../../hooks/useTimer"
+import { LapsType } from "../../types"
+import { useActiveLapTime, useLapData } from "../../streams/stateStream"
 
-const Laps = ({ started, timerProps, lapData }: LapsType) => {
-	const { times: lapTimes, totalTime: totalLapTime } = lapData
+const Laps = ({ started }: LapsType) => {
+
+	const lapTimes = useLapData()
 
 	const { slowInd, fastInd } = lapTimes.reduce(
 		(acc, lap, ind) => {
@@ -55,7 +56,7 @@ const Laps = ({ started, timerProps, lapData }: LapsType) => {
 	return (
 		<div className="laps-box">
 			{started ? (
-				<ActiveLap lapNumber={lapTimes.length + 1} timerProps={timerProps} totalLapTime={totalLapTime} />
+				<ActiveLap lapNumber={lapTimes.length + 1} />
 			) : null}
 			{laps}
 			{emptyLaps}
@@ -65,13 +66,11 @@ const Laps = ({ started, timerProps, lapData }: LapsType) => {
 
 type ActiveLapType = {
 	lapNumber: number
-	timerProps: TimerPropsType
-	totalLapTime: number
 }
 
-const ActiveLap = ({ lapNumber, timerProps, totalLapTime }: ActiveLapType) => {
-	const timer = useTimer(timerProps)
-	return <Lap colorClass={""} lapNumber={lapNumber} lapTime={timer.elapsedTime - totalLapTime} />
+const ActiveLap = ({ lapNumber }: ActiveLapType) => {
+	const time = useActiveLapTime()
+	return <Lap colorClass={""} lapNumber={lapNumber} lapTime={time} />
 }
 
 type LapType = {

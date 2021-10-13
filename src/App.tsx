@@ -1,31 +1,28 @@
-import React, { useReducer } from "react"
+import React from "react"
 import "./App.css"
 import MainTimer from "./components/MainTimer"
 import Buttons from "./components/Buttons"
 import Laps from "./components/Laps"
-import reducer, { ACTIONS, initialState } from "./reducer"
+import { useIsRunning, startTimer, pauseTimer, resetTimer, pushLap } from "./streams/stateStream"
 
 const App = () => {
-	const [{ isRunning, mainData, lapData }, dispatch] = useReducer(reducer, initialState)
+	//const [{ isRunning, mainData, lapData }, dispatch] = useReducer(reducer, initialState)
 
-	const mainTimerProps = { isRunning, timestamp: mainData.timestamp }
-	const lapTimerProps = { isRunning, timestamp: lapData.timestamp }
-
-	const started = lapData.timestamp > 0
+	const isRunning = useIsRunning()
 
 	return (
 		<div className="App">
 			<div className="background">
-				<MainTimer timerProps={mainTimerProps} />
+				<MainTimer />
 				<Buttons
-					started={started}
+					started={true}
 					running={isRunning}
-					startTimer={() => dispatch({ type: ACTIONS.START_TIMER })}
-					stopTimer={() => dispatch({ type: ACTIONS.PAUSE_TIMER })}
-					resetTimer={() => dispatch({ type: ACTIONS.RESET_TIMER })}
-					makeLap={() => dispatch({ type: ACTIONS.MAKE_LAP })}
+					startTimer={startTimer}
+					stopTimer={pauseTimer}
+					resetTimer={resetTimer}
+					makeLap={pushLap}
 				/>
-				<Laps started={started} timerProps={lapTimerProps} lapData={lapData} />
+				<Laps started={true}/>
 			</div>
 		</div>
 	)
