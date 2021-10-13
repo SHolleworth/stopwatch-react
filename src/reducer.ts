@@ -1,14 +1,13 @@
-type stateType = {	
+import { LapData, TimerData } from "./types"
+
+type stateType = {
 	isRunning: boolean
-	lapData: {
-		times: number[]
-		totalTime: number
-	}
+	mainData: TimerData
+	lapData: LapData
 }
 
 type actionType = {
-	type: string,
-    payload: any
+	type: string
 }
 
 export const ACTIONS = {
@@ -21,29 +20,59 @@ export const ACTIONS = {
 
 export const initialState = {
 	isRunning: false,
+	mainData: {
+		timestamp: 0,
+		savedTime: 0,
+	},
 	lapData: {
+		timestamp: 0,
+		savedTime: 0,
 		times: [],
 		totalTime: 0,
 	},
 }
 
-const reducer =  (state: stateType, action: actionType) => {
+const reducer = (state: stateType, action: actionType) => {
 	switch (action.type) {
 		case ACTIONS.START_TIMER:
-			return { ...state, isRunning: true }
+			return {
+				...state,
+				isRunning: true,
+				mainData: {
+					...state.mainData,
+					timestamp: Date.now(),
+				},
+				lapData: {
+					...state.lapData,
+					timestamp: Date.now(),
+				},
+			}
+
 		case ACTIONS.PAUSE_TIMER:
-			return { ...state, isRunning: false }
+			return {
+				...state,
+				isRunning: false,
+				lapData: {
+					...state.lapData,
+					savedTime: Date.now() - state.lapData.timestamp + state.lapData.savedTime,
+				},
+			}
+
 		case ACTIONS.RESET_TIMER:
-			action.payload()
-			return { ...state, lapData: { times: [], totalTime: 0 } }
+			return initialState
+
 		case ACTIONS.MAKE_LAP:
+			const newLapTime = Date.now() - state.lapData.timestamp + state.lapData.savedTime
 			return {
 				...state,
 				lapData: {
-					times: [action.payload, ...state.lapData.times],
-					totalTime: state.lapData.totalTime + action.payload,
+					savedTime: 0,
+					timestamp: Date.now(),
+					times: [newLapTime, ...state.lapData.times],
+					totalTime: state.lapData.totalTime + newLapTime,
 				},
 			}
+
 		default:
 			throw new Error("Error: Action type not recognised.")
 	}

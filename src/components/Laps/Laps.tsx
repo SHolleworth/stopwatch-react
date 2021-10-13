@@ -1,8 +1,11 @@
 import React from "react"
 import { renderTime } from "../../utility"
-import { LapsType } from "../../types"
+import { LapsType, TimerPropsType } from "../../types"
+import useTimer from "../../hooks/useTimer"
 
-const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
+const Laps = ({ started, timerProps, lapData }: LapsType) => {
+	const { times: lapTimes, totalTime: totalLapTime } = lapData
+
 	const { slowInd, fastInd } = lapTimes.reduce(
 		(acc, lap, ind) => {
 			if (lap > acc.slowLap) {
@@ -27,7 +30,7 @@ const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
 	const slowLapClass = lapTimes.length > 1 ? "lap--slow-color" : "lap--mask-color"
 
 	const addColorClass = (index: number) => {
-		if (index < 0) return
+		if (index < 0) return ""
 		if (fastInd === index) {
 			return fastLapClass
 		} else if (slowInd === index) {
@@ -37,26 +40,52 @@ const Laps = ({ started, elapsedTime, lapTimes }: LapsType) => {
 		}
 	}
 
-	const length = Math.max(0, 7 - lapTimes.length - (started ? 1 : 0))
+	const amountOfEmptyLaps = Math.max(0, 7 - lapTimes.length - (started ? 1 : 0))
 
-	const emptyLaps = new Array(length).fill(0, 0, length).map((el, index) => <div className={"lap"} key={index} />)
+	const emptyLaps = new Array(amountOfEmptyLaps)
+		.fill(0, 0, amountOfEmptyLaps)
+		.map((el, index) => <div className={"lap"} key={index} />)
 
-	const laps = started
-		? [elapsedTime, ...lapTimes].map((lapTime, index) => {
-				const lapNumber = lapTimes.length - index + 1
-				return (
-					<div className={"lap " + addColorClass(index - 1)} key={lapNumber}>
-						<p>{"Lap " + lapNumber}</p>
-						<p>{renderTime(lapTime)}</p>
-					</div>
-				)
-		  })
-		: null
+	const laps = lapTimes.map((lapTime, index) => {
+		const lapNumber = lapTimes.length - index
+		const colorClass = addColorClass(index)
+		return <Lap colorClass={colorClass} lapNumber={lapNumber} lapTime={lapTime} key={lapNumber} />
+	})
 
 	return (
 		<div className="laps-box">
+			{started ? (
+				<ActiveLap lapNumber={lapTimes.length + 1} timerProps={timerProps} totalLapTime={totalLapTime} />
+			) : null}
 			{laps}
 			{emptyLaps}
+		</div>
+	)
+}
+
+type ActiveLapType = {
+	lapNumber: number
+	timerProps: TimerPropsType
+	totalLapTime: number
+}
+
+const ActiveLap = ({ lapNumber, timerProps, totalLapTime }: ActiveLapType) => {
+	const timer = useTimer(timerProps)
+	return <Lap colorClass={""} lapNumber={lapNumber} lapTime={timer.elapsedTime - totalLapTime} />
+}
+
+type LapType = {
+	colorClass: string
+	lapNumber: number
+	lapTime: number
+}
+
+//Testable
+const Lap = ({ colorClass, lapNumber, lapTime }: LapType) => {
+	return (
+		<div className={"lap " + colorClass} key={lapNumber}>
+			<p>{"Lap " + lapNumber}</p>
+			<p>{renderTime(lapTime)}</p>
 		</div>
 	)
 }
