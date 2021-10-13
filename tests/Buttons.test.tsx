@@ -6,5 +6,5 @@ test("should render reset and start buttons when not running", () => {
 	const mock = () => {
 		return
 	}
-	render(<Buttons startTimer={mock} stopTimer={mock} resetTimer={mock} makeLap={mock} running={false} />)
+	render(<Buttons started={true} startTimer={mock} stopTimer={mock} resetTimer={mock} makeLap={mock} running={false} />)
 })
