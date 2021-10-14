@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { TimeDisplay } from "../src/components/MainTimer/MainTimer"
-import React from 'react'
+import React from "react"
 
 test("Renders 0 milliseconds correctly", () => {
 	render(<TimeDisplay timeInMilliseconds={0} />)
