@@ -1,1 +1,1 @@
-export { default } from "./Laps"
+export { default, Laps } from "./Laps"

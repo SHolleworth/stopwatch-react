@@ -46,13 +46,6 @@ lapDataSubject$.subscribe(laps => {
 	console.log("Laps from subscription: " + laps)
 })
 
-// const totalLapTime$ = lapDataSubject$.pipe(
-// 	map((laps: number[]) => { console.log(laps); return laps }),
-// 	map((laps: number[]) => laps.reduce((acc, curr) => acc + curr, 0)),
-// 	shareLatest()
-// )
-// WEIRD BUG, MULTIPLE OBSERVABLES BEING CREATED
-
 const activeLapTime$ = combineLatest([
 	elapsedTimeSubject$,
 	lapDataSubject$.pipe(map(laps => laps.reduce((totalTime, laps) => totalTime + laps, 0))),

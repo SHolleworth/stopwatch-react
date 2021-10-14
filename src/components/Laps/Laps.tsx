@@ -3,9 +3,16 @@ import { renderTime } from "../../utility"
 import { LapsType } from "../../types"
 import { useActiveLapTime, useLapData } from "../../streams/stateStream"
 
-const Laps = ({ started }: LapsType) => {
+const LapsContainer = ({ started }: { started: boolean }) => {
 	const lapTimes = useLapData()
+	return (
+		<div data-testid={"laps-box"} className="laps-box">
+			<Laps started={started} lapTimes={lapTimes} />
+		</div>
+	)
+}
 
+const Laps = ({ started, lapTimes }: LapsType) => {
 	const { slowInd, fastInd } = lapTimes.reduce(
 		(acc, lap, ind) => {
 			if (lap > acc.slowLap) {
@@ -40,24 +47,24 @@ const Laps = ({ started }: LapsType) => {
 		}
 	}
 
-	const amountOfEmptyLaps = Math.max(0, 7 - lapTimes.length - (started ? 1 : 0))
-
-	const emptyLaps = new Array(amountOfEmptyLaps)
-		.fill(0, 0, amountOfEmptyLaps)
-		.map((el, index) => <div className={"lap"} key={index} />)
-
 	const laps = lapTimes.map((lapTime, index) => {
 		const lapNumber = lapTimes.length - index
 		const colorClass = addColorClass(index)
 		return <Lap colorClass={colorClass} lapNumber={lapNumber} lapTime={lapTime} key={lapNumber} />
 	})
 
+	const amountOfEmptyLaps = Math.max(0, 7 - lapTimes.length - (started ? 1 : 0))
+
+	const emptyLaps = new Array(amountOfEmptyLaps)
+		.fill(0, 0, amountOfEmptyLaps)
+		.map((el, index) => <div className={"lap"} key={index} />)
+
 	return (
-		<div className="laps-box">
+		<>
 			{started ? <ActiveLap lapNumber={lapTimes.length + 1} /> : null}
 			{laps}
 			{emptyLaps}
-		</div>
+		</>
 	)
 }
 
@@ -86,4 +93,5 @@ const Lap = ({ colorClass, lapNumber, lapTime }: LapType) => {
 	)
 }
 
-export default Laps
+export { Laps }
+export default LapsContainer

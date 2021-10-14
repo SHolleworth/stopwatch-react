@@ -9,6 +9,7 @@ export type ButtonsType = {
 
 export type LapsType = {
 	started: boolean
+	lapTimes: number[]
 }
 
 export type TimerPropsType = {

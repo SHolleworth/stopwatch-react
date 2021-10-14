@@ -23,6 +23,7 @@
 	"rules": {
 		"react-hooks/exhaustive-deps": "off",
 		"@typescript-eslint/explicit-module-boundary-types": "off",
-		"no-case-declarations": "off"
+		"no-case-declarations": "off",
+		"react/react-in-jsx-scope": "off"
 	}
 }
