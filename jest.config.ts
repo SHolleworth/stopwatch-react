@@ -81,7 +81,11 @@ export default {
 	// ],
 
 	// A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-	// moduleNameMapper: {},
+	moduleNameMapper: {
+		"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+			"<rootDir>/__mocks__/fileMock.js",
+		"\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+	},
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
 	// modulePathIgnorePatterns: [],
@@ -114,7 +118,7 @@ export default {
 	// restoreMocks: false,
 
 	// The root directory that Jest should scan for tests and modules within
-	rootDir: "./",
+	// rootDir: "./",
 
 	// A list of paths to directories that Jest should use to search for files in
 	// roots: [
@@ -172,7 +176,9 @@ export default {
 	// timers: "real",
 
 	// A map from regular expressions to paths to transformers
-	// transform: undefined,
+	// transform: {
+	// 	"^.+\\.css$": "<rootDir>/__mocks__/styleMock.js"
+	// },
 
 	// An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
 	// transformIgnorePatterns: [

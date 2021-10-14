@@ -1,19 +1,18 @@
 import React from "react"
-import useTimer from "../../hooks/useTimer"
-import { TimerPropsType } from "../../types"
+import { useElapsedTime } from "../../streams/stateStream"
 import { renderTime } from "../../utility"
 
-const MainTimer = ({ timerProps }: { timerProps: TimerPropsType }) => {
+const MainTimer = () => {
 	return (
 		<div className="main-timer-box">
-			<TimeContainer timerProps={timerProps} />
+			<TimeContainer />
 		</div>
 	)
 }
 
-const TimeContainer = ({ timerProps }: { timerProps: TimerPropsType }) => {
-	const timer = useTimer(timerProps)
-	return <TimeDisplay timeInMilliseconds={timer.elapsedTime} />
+const TimeContainer = () => {
+	const time = useElapsedTime()
+	return <TimeDisplay timeInMilliseconds={time} />
 }
 
 //Container Component pattern for testable display
