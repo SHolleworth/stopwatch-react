@@ -80,9 +80,20 @@ isRunningWithLatestElapsedTime$.subscribe(({ isRunning, elapsedTime }: { isRunni
 	}
 })
 
-const [useElapsedTime] = bind(elapsedTimeSubject$, INITIAL_TIME)
+const [useElapsedTime, elapsedTime$] = bind(elapsedTimeSubject$, INITIAL_TIME)
 const [useLapData] = bind(lapDataSubject$, INITIAL_LAP_DATA)
 const [useActiveLapTime] = bind(activeLapTime$, 0)
 const [useIsRunning] = bind(isRunningSubject$, INITIAL_RUNNING)
+const [useIsStarted] = bind(elapsedTime$.pipe(map(time => time > 0)), false)
 
-export { useElapsedTime, useLapData, useActiveLapTime, useIsRunning, startTimer, pauseTimer, resetTimer, pushLap }
+export {
+	useElapsedTime,
+	useLapData,
+	useActiveLapTime,
+	useIsRunning,
+	useIsStarted,
+	startTimer,
+	pauseTimer,
+	resetTimer,
+	pushLap,
+}
