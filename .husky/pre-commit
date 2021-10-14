@@ -4,3 +4,4 @@
 npx lint-staged
 npm run pret
 npm run lint
+git add .
